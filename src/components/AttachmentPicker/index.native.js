@@ -7,6 +7,7 @@ import {Alert, Linking, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import RNDocumentPicker from 'react-native-document-picker';
 import RNFetchBlob from 'react-native-blob-util';
+import {withSafeAreaInsets} from 'react-native-safe-area-context';
 import Str from 'expensify-common/lib/str';
 import {propTypes as basePropTypes, defaultProps} from './attachmentPickerPropTypes';
 import styles from '../../styles/styles';
@@ -18,6 +19,7 @@ import withLocalize, {withLocalizePropTypes} from '../withLocalize';
 import compose from '../../libs/compose';
 import launchCamera from './launchCamera';
 import CONST from '../../CONST';
+import * as StyleUtils from '../../styles/StyleUtils';
 
 const propTypes = {
     ...basePropTypes,
@@ -311,7 +313,7 @@ class AttachmentPicker extends Component {
                 <Popover
                     onClose={this.close}
                     isVisible={this.state.isVisible}
-                    anchorPosition={styles.createMenuPosition}
+                    anchorPosition={{...styles.createMenuPositionReportActionCompose, ...StyleUtils.getSafeAreaPadding(this.props.insets)}}
                     onModalHide={this.onModalHide}
                 >
                     <View style={this.props.isSmallScreenWidth ? {} : styles.createMenuContainer}>
@@ -338,5 +340,6 @@ AttachmentPicker.defaultProps = defaultProps;
 
 export default compose(
     withWindowDimensions,
+    withSafeAreaInsets,
     withLocalize,
 )(AttachmentPicker);

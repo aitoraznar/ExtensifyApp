@@ -9,6 +9,7 @@ import _ from 'underscore';
 import lodashGet from 'lodash/get';
 import {withOnyx} from 'react-native-onyx';
 import lodashIntersection from 'lodash/intersection';
+import {withSafeAreaInsets} from 'react-native-safe-area-context';
 import styles from '../../../styles/styles';
 import themeColors from '../../../styles/themes/default';
 import Composer from '../../../components/Composer';
@@ -47,6 +48,7 @@ import ExceededCommentLength from '../../../components/ExceededCommentLength';
 import withNavigationFocus from '../../../components/withNavigationFocus';
 import * as EmojiUtils from '../../../libs/EmojiUtils';
 import reportPropTypes from '../../reportPropTypes';
+import * as StyleUtils from '../../../styles/StyleUtils';
 
 const propTypes = {
     /** Beta features list */
@@ -595,7 +597,7 @@ class ReportActionCompose extends React.Component {
                                                 isVisible={this.state.isMenuVisible}
                                                 onClose={() => this.setMenuVisibility(false)}
                                                 onItemSelected={() => this.setMenuVisibility(false)}
-                                                anchorPosition={styles.createMenuPositionReportActionCompose}
+                                                anchorPosition={{...styles.createMenuPositionReportActionCompose, ...StyleUtils.getSafeAreaPadding(this.props.insets)}}
                                                 menuItems={[...this.getIOUOptions(reportParticipants),
                                                     {
                                                         icon: Expensicons.Paperclip,
@@ -722,6 +724,7 @@ export default compose(
     withNetwork(),
     withPersonalDetails(),
     withCurrentUserPersonalDetails,
+    withSafeAreaInsets,
     withOnyx({
         betas: {
             key: ONYXKEYS.BETAS,
