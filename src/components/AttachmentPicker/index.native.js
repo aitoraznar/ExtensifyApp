@@ -19,7 +19,6 @@ import withLocalize, {withLocalizePropTypes} from '../withLocalize';
 import compose from '../../libs/compose';
 import launchCamera from './launchCamera';
 import CONST from '../../CONST';
-import * as StyleUtils from '../../styles/StyleUtils';
 
 const propTypes = {
     ...basePropTypes,
@@ -313,7 +312,7 @@ class AttachmentPicker extends Component {
                 <Popover
                     onClose={this.close}
                     isVisible={this.state.isVisible}
-                    anchorPosition={{...styles.createMenuPositionReportActionCompose, ...StyleUtils.getSafeAreaPadding(this.props.insets)}}
+                    anchorPosition={this.props.anchorPosition}
                     onModalHide={this.onModalHide}
                 >
                     <View style={this.props.isSmallScreenWidth ? {} : styles.createMenuContainer}>
