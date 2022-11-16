@@ -49,9 +49,11 @@ class KYCWall extends React.Component {
         if (!this.state.transferBalanceButton) {
             return;
         }
-        const buttonPosition = getClickedTargetLocation(this.state.transferBalanceButton);
-        const position = this.getAnchorPosition(buttonPosition);
-        this.setPositionAddPaymentMenu(position);
+        getClickedTargetLocation(this.state.transferBalanceButton)
+            .then((_position) => {
+                const position = this.getAnchorPosition(_position);
+                this.setPositionAddPaymentMenu(position);
+            });
     }
 
     /**
@@ -93,18 +95,20 @@ class KYCWall extends React.Component {
      */
     continue(event) {
         this.setState({
-            transferBalanceButton: event.nativeEvent.target,
+            transferBalanceButton: event.currentTarget,
         });
 
         // Check to see if user has a valid payment method on file and display the add payment popover if they don't
         if (!PaymentUtils.hasExpensifyPaymentMethod(this.props.cardList, this.props.bankAccountList)) {
             Log.info('[KYC Wallet] User does not have valid payment method');
-            const clickedElementLocation = getClickedTargetLocation(event.nativeEvent.target);
-            const position = this.getAnchorPosition(clickedElementLocation);
-            this.setPositionAddPaymentMenu(position);
-            this.setState({
-                shouldShowAddPaymentMenu: true,
-            });
+            getClickedTargetLocation(event.currentTarget)
+                .then((_position) => {
+                    const position = this.getAnchorPosition(_position);
+                    this.setPositionAddPaymentMenu(position);
+                    this.setState({
+                        shouldShowAddPaymentMenu: true,
+                    });
+                });
             return;
         }
 
