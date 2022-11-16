@@ -154,22 +154,27 @@ class BasePaymentsPage extends React.Component {
                     type: CONST.PAYMENT_METHODS.DEBIT_CARD,
                 };
             }
-            this.setState({
-                isSelectedPaymentMethodDefault: isDefault,
-                shouldShowDefaultDeleteMenu: true,
-                selectedPaymentMethod: account,
-                selectedPaymentMethodType: accountType,
-                formattedSelectedPaymentMethod,
-                methodID,
+
+            getClickedTargetLocation(nativeEvent.currentTarget).then((position) => {
+                this.setPositionAddPaymentMenu(position);
+                this.setState({
+                    isSelectedPaymentMethodDefault: isDefault,
+                    shouldShowDefaultDeleteMenu: true,
+                    selectedPaymentMethod: account,
+                    selectedPaymentMethodType: accountType,
+                    formattedSelectedPaymentMethod,
+                    methodID,
+                });
             });
-            getClickedTargetLocation(nativeEvent.currentTarget).then(position => this.setPositionAddPaymentMenu(position));
             return;
         }
-        this.setState({
-            shouldShowAddPaymentMenu: true,
-        });
 
-        getClickedTargetLocation(nativeEvent.currentTarget).then(position => this.setPositionAddPaymentMenu(position));
+        getClickedTargetLocation(nativeEvent.currentTarget).then((position) => {
+            this.setPositionAddPaymentMenu(position);
+            this.setState({
+                shouldShowAddPaymentMenu: true,
+            });
+        });
     }
 
     /**
