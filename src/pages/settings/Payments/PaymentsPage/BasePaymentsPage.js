@@ -84,8 +84,8 @@ class BasePaymentsPage extends React.Component {
         if (!this.state.addPaymentMethodButton) {
             return;
         }
-        const buttonPosition = getClickedTargetLocation(this.state.addPaymentMethodButton);
-        this.setPositionAddPaymentMenu(buttonPosition);
+
+        getClickedTargetLocation(this.state.addPaymentMethodButton).then(position => this.setPositionAddPaymentMenu(position));
     }
 
     getSelectedPaymentMethodID() {
@@ -125,7 +125,6 @@ class BasePaymentsPage extends React.Component {
      * @param {String|Number} methodID
      */
     paymentMethodPressed(nativeEvent, accountType, account, isDefault, methodID) {
-        const position = getClickedTargetLocation(nativeEvent.currentTarget);
         this.setState({
             addPaymentMethodButton: nativeEvent.currentTarget,
         });
@@ -163,14 +162,14 @@ class BasePaymentsPage extends React.Component {
                 formattedSelectedPaymentMethod,
                 methodID,
             });
-            this.setPositionAddPaymentMenu(position);
+            getClickedTargetLocation(nativeEvent.currentTarget).then(position => this.setPositionAddPaymentMenu(position));
             return;
         }
         this.setState({
             shouldShowAddPaymentMenu: true,
         });
 
-        this.setPositionAddPaymentMenu(position);
+        getClickedTargetLocation(nativeEvent.currentTarget).then(position => this.setPositionAddPaymentMenu(position));
     }
 
     /**
