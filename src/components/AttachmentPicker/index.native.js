@@ -7,7 +7,6 @@ import {Alert, Linking, View} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
 import RNDocumentPicker from 'react-native-document-picker';
 import RNFetchBlob from 'react-native-blob-util';
-import {withSafeAreaInsets} from 'react-native-safe-area-context';
 import Str from 'expensify-common/lib/str';
 import {propTypes as basePropTypes, defaultProps} from './attachmentPickerPropTypes';
 import styles from '../../styles/styles';
@@ -339,6 +338,5 @@ AttachmentPicker.defaultProps = defaultProps;
 
 export default compose(
     withWindowDimensions,
-    withSafeAreaInsets,
     withLocalize,
 )(AttachmentPicker);
