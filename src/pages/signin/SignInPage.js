@@ -68,8 +68,8 @@ class SignInPage extends Component {
         // Show the resend validation link form if
         // - A login has been entered
         // - AND is not validated or password is forgotten
-        const shouldShowResendValidationLinkForm = this.props.credentials.login
-            && (!this.props.account.validated || this.props.account.forgotPassword);
+        const shouldShowResendValidationLinkForm = showLoginForm === false && showPasswordForm === false;
+        console.log('=====>shouldShowResendValidationLinkForm', shouldShowResendValidationLinkForm);
 
         const welcomeText = shouldShowResendValidationLinkForm
             ? ''
